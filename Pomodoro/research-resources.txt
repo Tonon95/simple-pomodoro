@@ -1,0 +1,3 @@
+﻿https://code.tutsplus.com/tutorials/how-to-use-mvvm-in-a-universal-windows-app--cms-25582
+http://joeljoseph.net/using-mvvm-light-with-universal-windows-app-for-windows-10/
+http://www.mvvmlight.net/doc

@@ -1,0 +1,68 @@
+﻿<Application
+    x:Class="Pomodoro.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pomodoro"
+    xmlns:viewModels="using:Pomodoro.ViewModels">
+    <Application.Resources>
+        <viewModels:ViewModelLocator x:Key="Locator"/>
+        
+        
+        <!-- Red Button Color Gradient -->
+        <LinearGradientBrush x:Key="RedButtonNormalGradientBrush">
+            <GradientStop Offset="0" Color="IndianRed"/>
+            <GradientStop Offset="1" Color="DarkRed"/>
+            <GradientStop Offset="1" Color="Gold"/>
+        </LinearGradientBrush>
+        
+        <!-- Red Button Pressed State Color Gradient -->
+        <LinearGradientBrush x:Key="RedButtonPressedGradientBrush">
+            <GradientStop Offset="0" Color="#934848"/>
+            <GradientStop Offset="1" Color="#630a0a"/>
+            <GradientStop Offset="1" Color="Gold"/>
+        </LinearGradientBrush>
+        
+        <!-- Red Button OnHover State Color Gradient -->
+        <LinearGradientBrush x:Key="RedButtonPointerOverGradientBrush">
+            <GradientStop Offset="0" Color="White"/>
+            <GradientStop Offset="1" Color="IndianRed"/>
+        </LinearGradientBrush>
+        
+        <!-- Timer Button Style -->
+        <Style x:Name="TimerButton" TargetType="Button">
+            <Setter Property="Height" Value="200"/>
+            <Setter Property="Width" Value="200"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Disabled"/>
+                                    <VisualState x:Name="Normal"/>
+                                    <VisualState x:Name="PointerOver"/>
+                                    <VisualState x:Name="Pressed">
+                                        <VisualState.Setters>
+                                            <Setter Target="Circle.(Shape.Fill)" Value="{StaticResource RedButtonPressedGradientBrush}"/>
+                                            <Setter Target="Circle.Width" Value="195"/>
+                                            <Setter Target="Circle.Height" Value="195"/>
+                                            <Setter Target="Circle.(Shape.Stroke)" Value="#934848"/>
+                                        </VisualState.Setters>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+
+                            <Ellipse Name="Circle" Stroke="IndianRed" StrokeThickness="2" Fill="{ThemeResource RedButtonNormalGradientBrush}"/>
+                            <ContentPresenter Name="RedButtonContentPresenter" Content="{TemplateBinding Content}" FontFamily="{TemplateBinding FontFamily}" 
+                                              FontSize="{TemplateBinding FontSize}" Foreground="LightGray"
+                                              HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Application.Resources>
+
+</Application>
