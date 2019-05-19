@@ -19,9 +19,9 @@ namespace Pomodoro.Utils
         /// </summary>
         public static void InitTimerValues()
         {
-            WorkBaseTime = 1 * 60;
-            LongRestBaseTime = 2 * 60;
-            ShortRestBaseTime = 1 * 60;
+            WorkBaseTime = 25 * 60;
+            LongRestBaseTime = 30 * 60;
+            ShortRestBaseTime = 10 * 60;
         }
     }
 }

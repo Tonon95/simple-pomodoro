@@ -5,6 +5,8 @@
     xmlns:local="using:Pomodoro.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:interact="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d"
     DataContext="{Binding Settings, Source={StaticResource Locator}}"
     RequestedTheme="Light"
@@ -30,7 +32,7 @@
 
                 <!-- Work Selection ComboBox -->
                 <ComboBox Name="WorkTimeSelectComboBox" Header="Work Time" 
-                          Width="200" SelectedIndex="4" Margin="20,0,0,40">
+                          Width="200" Margin="20,0,0,40" SelectedIndex="{Binding WorkTimeSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
                     <x:String>15 min</x:String>
@@ -39,12 +41,21 @@
                     <x:String>30 min</x:String>
                     <x:String>35 min</x:String>
                     <x:String>40 min</x:String>
+                    
+                    
+                    <interact:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding ChangeWorkTimeDurationCommand}"
+                                                      CommandParameter="{Binding Path=SelectedIndex, ElementName=WorkTimeSelectComboBox}"/>
+                        </core:EventTriggerBehavior>
+                    </interact:Interaction.Behaviors>
+
                 </ComboBox>
 
 
                 <!-- Small Rest Selection ComboBox -->
                 <ComboBox Name="SmallRestTimeSelectComboBox" Header="Small Rest Time"
-                          Width="200" SelectedIndex="0" Margin="20,0,0,40">
+                          Width="200" Margin="20,0,0,40" SelectedIndex="{Binding LongRestSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
                     <x:String>15 min</x:String>
@@ -53,12 +64,21 @@
                     <x:String>30 min</x:String>
                     <x:String>35 min</x:String>
                     <x:String>40 min</x:String>
+
+
+                    <interact:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding ChangeShortRestDurationCommand}"
+                                                      CommandParameter="{Binding Path=SelectedIndex, ElementName=WorkTimeSelectComboBox}"/>
+                        </core:EventTriggerBehavior>
+                    </interact:Interaction.Behaviors>
+
                 </ComboBox>
 
 
                 <!-- Long Rest Selection ComboBox -->
                 <ComboBox Name="LongRestSelectComboBox" Header="Long Rest Time"
-                          Width="200" SelectedIndex="5" Margin="20,0,0,40">
+                          Width="200" Margin="20,0,0,40" SelectedIndex="{Binding ShortRestSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
                     <x:String>15 min</x:String>
@@ -67,6 +87,15 @@
                     <x:String>30 min</x:String>
                     <x:String>35 min</x:String>
                     <x:String>40 min</x:String>
+
+
+                    <interact:Interaction.Behaviors>
+                        <core:EventTriggerBehavior EventName="SelectionChanged">
+                            <core:InvokeCommandAction Command="{Binding ChangeLongRestDurationCommand}"
+                                                      CommandParameter="{Binding Path=SelectedIndex, ElementName=WorkTimeSelectComboBox}"/>
+                        </core:EventTriggerBehavior>
+                    </interact:Interaction.Behaviors>
+
                 </ComboBox>
 
             </StackPanel>

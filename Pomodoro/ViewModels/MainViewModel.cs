@@ -97,6 +97,7 @@ namespace Pomodoro.ViewModels
             ChangeStartTimerButtonContent("\uE102", "90", "Segoe MDL2 Assets");
 
             // Setting pomodoro workflow
+            pomodoroCurrentStateIndex = 0;
             pomodoroWorkflow = new List<PomodoroStates>();
             for (int i = 0; i < 3; i++)
             {
@@ -138,9 +139,12 @@ namespace Pomodoro.ViewModels
 
             if (baseTime == 0)
             {
+                _isTimerRunning = false;
                 _dispatcherTimer.Stop();
                 SendToastNotification();
                 ChangeStartTimerButtonContent("\uE102", "90", "Segoe MDL2 Assets");
+
+                pomodoroCurrentStateIndex = (pomodoroCurrentStateIndex + 1 < pomodoroWorkflow.Count) ? (pomodoroCurrentStateIndex + 1) : 0;
 
             }
         }
@@ -174,22 +178,20 @@ namespace Pomodoro.ViewModels
             _isStayingAfterClick = true;
 
 
-            if (baseTime == 0)
+            switch (pomodoroWorkflow[pomodoroCurrentStateIndex])
             {
-                switch (pomodoroWorkflow[pomodoroCurrentStateIndex])
-                {
-                    case PomodoroStates.WORK: baseTime = Utils.TimeManager.WorkBaseTime; break;
-                    case PomodoroStates.LONG_REST: baseTime = Utils.TimeManager.LongRestBaseTime; break;
-                    case PomodoroStates.SHORT_REST: baseTime = Utils.TimeManager.ShortRestBaseTime; break;
-                }
-
-                pomodoroCurrentStateIndex = (pomodoroCurrentStateIndex + 1 < pomodoroWorkflow.Count) ? (pomodoroCurrentStateIndex + 1)
-                                                                                                     : 0;
+                case PomodoroStates.WORK: baseTime = Utils.TimeManager.WorkBaseTime; break;
+                case PomodoroStates.LONG_REST: baseTime = Utils.TimeManager.LongRestBaseTime; break;
+                case PomodoroStates.SHORT_REST: baseTime = Utils.TimeManager.ShortRestBaseTime; break;
             }
 
-            ChangeStartTimerButtonContent(String.Format("{0:00}:{1:00}", baseTime / 60, baseTime % 60), 
-                                          "55", "Roboto");
-            
+            Debug.WriteLine("CURRENT INDEX: " + pomodoroCurrentStateIndex);
+            Debug.WriteLine("WORK BASE TIME: " + Utils.TimeManager.WorkBaseTime);
+            Debug.WriteLine("LONG BASE TIME: " + Utils.TimeManager.LongRestBaseTime);
+            Debug.WriteLine("SHORT BASE TIME: " + Utils.TimeManager.ShortRestBaseTime);
+
+            ChangeStartTimerButtonContent(String.Format("{0:00}:{1:00}", baseTime / 60, baseTime % 60), "55", "Roboto");
+
 
             if (!_dispatcherTimer.IsEnabled)
             {
