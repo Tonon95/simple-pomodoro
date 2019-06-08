@@ -58,7 +58,6 @@
                                               FontSize="{TemplateBinding FontSize}" Foreground="LightGray"
                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Grid>
-
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

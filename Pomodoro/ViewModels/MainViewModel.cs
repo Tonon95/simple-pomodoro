@@ -1,12 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
-using GalaSoft.MvvmLight.Threading;
 using GalaSoft.MvvmLight.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using Windows.UI.Xaml;
 using Microsoft.Toolkit.Uwp.Notifications;
 using Windows.UI.Notifications;
