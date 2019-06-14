@@ -26,12 +26,13 @@
                 VerticalAlignment="Top" HorizontalAlignment="Right"/>
 
 
-        <StackPanel Background="IndianRed">
+        <StackPanel Background="#ad3737">
             <StackPanel Orientation="Vertical" Margin="60,20,0,0">
-                <TextBlock Text="Settings" FontSize="78" FontFamily="Roboto" Margin="0,20,0,80"/>
+                <TextBlock Text="Settings" FontSize="78" Foreground="#dddddd" FontFamily="Roboto" Margin="0,20,0,80"/>
 
                 <!-- Work Selection ComboBox -->
-                <ComboBox Name="WorkTimeSelectComboBox" Header="Work Time" 
+                <ComboBox Name="WorkTimeSelectComboBox" Header="Work Time"
+                          Foreground="#dddddd" Background="IndianRed" FontWeight="SemiBold"
                           Width="200" Margin="20,0,0,40" SelectedIndex="{Binding WorkTimeSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
@@ -41,8 +42,8 @@
                     <x:String>30 min</x:String>
                     <x:String>35 min</x:String>
                     <x:String>40 min</x:String>
-                    
-                    
+
+
                     <interact:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="SelectionChanged">
                             <core:InvokeCommandAction Command="{Binding ChangeWorkTimeDurationCommand}"
@@ -54,7 +55,8 @@
 
 
                 <!-- Small Rest Selection ComboBox -->
-                <ComboBox Name="SmallRestTimeSelectComboBox" Header="Small Rest Time"
+                <ComboBox Name="SmallRestTimeSelectComboBox" Header="Small Rest Time" 
+                          Foreground="#dddddd" Background="IndianRed" FontWeight="SemiBold"
                           Width="200" Margin="20,0,0,40" SelectedIndex="{Binding ShortRestSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
@@ -78,6 +80,7 @@
 
                 <!-- Long Rest Selection ComboBox -->
                 <ComboBox Name="LongRestSelectComboBox" Header="Long Rest Time"
+                          Foreground="#dddddd" Background="IndianRed" FontWeight="SemiBold"
                           Width="200" Margin="20,0,0,40" SelectedIndex="{Binding LongRestSelectedIndex}">
                     <x:String>5 min</x:String>
                     <x:String>10 min</x:String>
@@ -95,11 +98,8 @@
                                                       CommandParameter="{Binding Path=SelectedIndex, ElementName=LongRestSelectComboBox}"/>
                         </core:EventTriggerBehavior>
                     </interact:Interaction.Behaviors>
-
                 </ComboBox>
-
             </StackPanel>
         </StackPanel>
-
     </Grid>
 </Page>

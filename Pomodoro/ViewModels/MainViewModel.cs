@@ -18,6 +18,7 @@ namespace Pomodoro.ViewModels
 
         // Binding Attributes
         private string _timer;
+        private string _currentState;
         private bool _isPointerOver;
         private bool _isTimerRunning;
         private bool _isStayingAfterClick;
@@ -61,6 +62,15 @@ namespace Pomodoro.ViewModels
                 RaisePropertyChanged("TimerButton_FontFamily");
             }
         }
+        public string CurrentState {
+            get {
+                return _currentState;
+            }
+            set {
+                Set(nameof(CurrentState), ref _currentState, value);
+                RaisePropertyChanged("CurrentState");
+            }
+        }
 
 
         // Commands
@@ -82,15 +92,16 @@ namespace Pomodoro.ViewModels
 
 
 
-
         public MainViewModel(INavigationService navigationService)
         {
+            SetupTimer();
+
             // Initializing values
             _isPointerOver = false;
             _isTimerRunning = false;
             _isStayingAfterClick = false;
+            CurrentState = "Work";
 
-            SetupTimer();
             ChangeStartTimerButtonContent("\uE102", "90", "Segoe MDL2 Assets");
 
             // Setting pomodoro workflow
@@ -142,7 +153,8 @@ namespace Pomodoro.ViewModels
                 ChangeStartTimerButtonContent("\uE102", "90", "Segoe MDL2 Assets");
 
                 pomodoroCurrentStateIndex = (pomodoroCurrentStateIndex + 1 < pomodoroWorkflow.Count) ? (pomodoroCurrentStateIndex + 1) : 0;
-
+                CurrentState = Enum.GetName(typeof(PomodoroStates), pomodoroWorkflow[pomodoroCurrentStateIndex]);
+                CurrentState = CurrentState.ToLowerInvariant().Replace('_', ' ');
             }
         }
 
@@ -174,7 +186,6 @@ namespace Pomodoro.ViewModels
         {
             _isStayingAfterClick = true;
 
-
             switch (pomodoroWorkflow[pomodoroCurrentStateIndex])
             {
                 case PomodoroStates.WORK: baseTime = Utils.TimeManager.WorkBaseTime; break;
@@ -182,13 +193,7 @@ namespace Pomodoro.ViewModels
                 case PomodoroStates.SHORT_REST: baseTime = Utils.TimeManager.ShortRestBaseTime; break;
             }
 
-            Debug.WriteLine("CURRENT INDEX: " + pomodoroCurrentStateIndex);
-            Debug.WriteLine("WORK BASE TIME: " + Utils.TimeManager.WorkBaseTime);
-            Debug.WriteLine("LONG BASE TIME: " + Utils.TimeManager.LongRestBaseTime);
-            Debug.WriteLine("SHORT BASE TIME: " + Utils.TimeManager.ShortRestBaseTime);
-
             ChangeStartTimerButtonContent(String.Format("{0:00}:{1:00}", baseTime / 60, baseTime % 60), "55", "Roboto");
-
 
             if (!_dispatcherTimer.IsEnabled)
             {
@@ -241,13 +246,19 @@ namespace Pomodoro.ViewModels
             ToastContent toastContent = new ToastContent()
             {
                 Visual = toastVisual,
-
                 Launch = new QueryString().ToString()
             };
 
 
             var toast = new ToastNotification(toastContent.GetXml());
-            ToastNotificationManager.CreateToastNotifier().Show(toast);
+            toast.ExpirationTime = DateTime.Now.AddHours(1);
+            try
+            {
+                ToastNotificationManager.CreateToastNotifier().Show(toast);
+            } catch (Exception e)
+            {
+                Debug.WriteLine("Could not show toast notification");
+            }
         }
 
 

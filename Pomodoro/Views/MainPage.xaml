@@ -15,6 +15,10 @@
     
     
     <Grid>
+        <TextBlock Text="{Binding CurrentState}" Margin="0,80,0,0"
+                   FontSize="82" FontFamily="Roboto" Foreground="#ad3737" FontWeight="SemiBold"
+                   VerticalAlignment="Top" HorizontalAlignment="Center"/>
+
         <Button Name="SettingsButton" Command="{Binding NavigateToSettingsCommand}" 
                 FontFamily="Segoe MDL2 Assets" FontSize="24" 
                 Foreground="SlateGray" Background="Transparent" 
